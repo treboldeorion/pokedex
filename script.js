@@ -1,11 +1,18 @@
 const url = "https://raw.githubusercontent.com/oicrruf/g15-computer-science/develop/ejercicios/pokedex-registro/json/pokemon.json"
 
+let respuesta2
+
+async function inicio () {
+const respuesta = await fetch (`${url}`);
+respuesta2= await respuesta.json();
+dibujar(respuesta2);}
+
+inicio()
+
 const busqueda = async () =>{
     let pokebusqueda = document.getElementById("pokebusqueda").value
-    const respuesta = await fetch (`${url}`);
-    const respuesta2= await respuesta.json();
-    await dibujar(respuesta2);
-    let buscador = buscar ("pokebusqueda", respuesta2)
+    let buscador = buscar (pokebusqueda, respuesta2)
+    await dibujar(buscador);
     console.log(buscador)
 }
 
@@ -34,7 +41,6 @@ const dibujar = (pokemon)=>{
   })
 
 
-
   document.querySelector("#resultado").appendChild(div);
     }
 }
@@ -42,7 +48,7 @@ const dibujar = (pokemon)=>{
 function buscar(nombre,pokemones){
   let respuesta3 = pokemones.filter(function (pokemon) {
     console.log(pokemones.name)
-    return pokemon.name == nombre
+    return pokemon.name.toLowerCase().includes(nombre.toLowerCase())
   }) 
   return respuesta3
 }
